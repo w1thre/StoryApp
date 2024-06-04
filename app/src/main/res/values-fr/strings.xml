@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="signup">S\'inscrire</string>
+    <string name="login">Connexion</string>
+    <string name="message_welcome_page">Partagez vos histoires, téléchargez des histoires pour rester à jour avec vos amis exclusivement sur StoryApp</string>
+    <string name="title_welcome_page">Bienvenue sur StoryApp !</string>
+    <string name="title_signup_page">Complétez vos informations ci-dessous</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
+    <string name="message_login_page">Entrez d\'abord vos données</string>
+    <string name="title_login_page">Êtes-vous prêt à partager vos histoires ?</string>
+    <string name="name">Nom</string>
+    <string name="message_main_page">Bon partage sur StoryApp.</string>
+    <string name="password_error_message">Le mot de passe doit contenir au moins 8 caractères</string>
+    <string name="greeting">Bonjour %1$s,</string>
+    <string name="logout">Déconnexion</string>
+    <string name="image_story">Histoire d\'image</string>
+    <string name="title">Titre</string>
+    <string name="desc">Description</string>
+    <string name="add_story">Ajouter une histoire</string>
+    <string name="bahasa">Langue</string>
+    <string name="galeri">Galerie</string>
+    <string name="upload">Télécharger</string>
+    <string name="camera">Caméra</string>
+    <string name="desc_hint">Description</string>
+    <string name="upload_validation">Veuillez sélectionner une image et entrer une description</string>
+    <string name="upload_successful">Téléchargement réussi</string>
+    <string name="content_desc">Description du contenu</string>
+    <string name="continue_text">Continuer</string>
+    <string name="yeah">Yay!</string>
+    <string name="error">Erreur</string>
+    <string name="try_again">Réessayez</string>
+    <string name="unknown_error">Erreur inconnue</string>
+    <string name="login_success">Vous vous êtes connecté avec succès. Vous avez hâte de partager votre histoire?</string>
+    <string name="oops">Oopsi!</string>
+    <string name="email_format">Mauvais format d\'e-mail !</string>
+    <string name="password_format">Le mot de passe ne peut être inférieur à 8 caractères</string>
+    <string name="permission_request_granted">Demande d\'autorisation accordée</string>
+    <string name="permission_request_denied">Demande d\'autorisation refusée</string>
+    <string name="upload_failed">Le téléchargement a échoué : %1$s</string>
+    <string name="not_found">Aucune donnée n\'a été trouvée</string>
+    <string name="success_update_data">Données de mise à jour de la réussite</string>
+</resources>

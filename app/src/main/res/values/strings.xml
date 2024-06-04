@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="signup">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="message_welcome_page">Share your stories, upload stories to keep you updated with your friends exclusively on StoryApp</string>
+    <string name="title_welcome_page">Welcome to StoryApp!</string>
+    <string name="title_signup_page">Complete your details below</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="message_login_page">Enter your data first</string>
+    <string name="title_login_page">Are you ready to share your stories?</string>
+    <string name="name">Name</string>
+    <string name="message_main_page">Happy Sharing at StoryApp.</string>
+    <string name="password_error_message">Password must be at least 8 characters long</string>
+    <string name="greeting">Hello %1$s,</string>
+    <string name="logout">Logout</string>
+    <string name="image_story">Image story</string>
+    <string name="title">Title</string>
+    <string name="desc">Description</string>
+    <string name="add_story">Add Story</string>
+    <string name="bahasa">Language</string>
+    <string name="galeri">Gallery</string>
+    <string name="upload">Upload</string>
+    <string name="camera">Camera</string>
+    <string name="desc_hint">Description</string>
+    <string name="upload_validation">Please select an image and enter a description</string>
+    <string name="upload_successful">Upload successful</string>
+    <string name="content_desc">Content Description</string>
+    <string name="continue_text">Continue</string>
+    <string name="yeah">Yeah!</string>
+    <string name="error">Error</string>
+    <string name="try_again">Try Again</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="oops">Oops!</string>
+    <string name="email_format">Wrong email format!</string>
+    <string name="password_format">Password cannot be less than 8 characters</string>
+    <string name="permission_request_granted">Permission request granted</string>
+    <string name="permission_request_denied">Permission request denied</string>
+    <string name="upload_failed">Upload failed: %1$s</string>
+    <string name="login_success">You have successfully logged in. Can\'t wait to share your story?</string>
+    <string name="not_found">No data found</string>
+    <string name="success_update_data">Success update data</string>
+</resources>

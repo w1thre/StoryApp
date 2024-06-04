@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="signup">Daftar</string>
+    <string name="login">Masuk</string>
+    <string name="message_welcome_page">Bagikan cerita Anda, unggah cerita untuk tetap diperbarui dengan teman-teman Anda secara eksklusif di StoryApp</string>
+    <string name="title_welcome_page">Selamat Datang di StoryApp!</string>
+    <string name="title_signup_page">Lengkapi detail Anda di bawah ini</string>
+    <string name="email">Email</string>
+    <string name="password">Kata Sandi</string>
+    <string name="message_login_page">Masukkan data Anda terlebih dahulu</string>
+    <string name="title_login_page">Apakah Anda siap untuk berbagi cerita Anda?</string>
+    <string name="name">Nama</string>
+    <string name="message_main_page">Selamat Berbagi di StoryApp.</string>
+    <string name="password_error_message">Kata sandi harus terdiri dari setidaknya 8 karakter</string>
+    <string name="greeting">Halo %1$s,</string>
+    <string name="logout">Keluar</string>
+    <string name="image_story">Cerita Gambar</string>
+    <string name="title">Judul</string>
+    <string name="desc">Deskripsi</string>
+    <string name="add_story">Tambah Cerita</string>
+    <string name="bahasa">Bahasa</string>
+    <string name="galeri">Galeri</string>
+    <string name="upload">Unggah</string>
+    <string name="camera">Kamera</string>
+    <string name="desc_hint">Deskripsi</string>
+    <string name="upload_validation">Silakan pilih gambar dan masukkan deskripsi</string>
+    <string name="upload_successful">Unggah berhasil</string>
+    <string name="content_desc">Deskripsi Konten</string>
+    <string name="continue_text">Lanjut</string>
+    <string name="yeah">Yay!</string>
+    <string name="error">Gagal</string>
+    <string name="try_again">Coba Lagi</string>
+    <string name="unknown_error">Gagal Tidak DIketahui</string>
+    <string name="login_success">Anda berhasil login. Sudah tidak sabar untuk sharing story ya?</string>
+    <string name="oops">Oopsie!</string>
+    <string name="email_format">Format email salah!</string>
+    <string name="password_format">Kata sandi tidak boleh kurang dari 8 karakter</string>
+    <string name="permission_request_granted">Permintaan izin diterima</string>
+    <string name="permission_request_denied">Permintaan izin ditolak</string>
+    <string name="upload_failed">Pengunggahan gagal: %1$s</string>
+    <string name="not_found">Tidak ada data yang ditemukan</string>
+    <string name="success_update_data">Berhasil memperbarui data</string>
+</resources>
