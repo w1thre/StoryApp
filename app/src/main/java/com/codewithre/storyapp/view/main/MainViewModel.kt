@@ -15,22 +15,20 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
     private val _listStory = MutableLiveData<List<ListStoryItem?>>()
     val listStory: LiveData<List<ListStoryItem?>> = _listStory
 
-    private val _errMsg = MutableLiveData<String?>()
-    val errMsg: LiveData<String?> = _errMsg
-
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
     fun getStories() {
         viewModelScope.launch {
             _isLoading.value = true
-            val response = repository.getStories()
-            if (response.isSuccess) {
-                _listStory.value = response.getOrNull()?.listStory ?: emptyList()
-            } else {
-                _errMsg.value = response.exceptionOrNull()?.message
+            try {
+                val response = repository.getStories()
+                _listStory.value = response.listStory
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                _isLoading.value = false
             }
-            _isLoading.value = false
         }
     }
 

@@ -35,15 +35,12 @@ class UserRepository private constructor(
         return apiService.login(email, password)
     }
 
-    suspend fun getStories(): Result<StoryResponse> {
-        return try {
-            val response = apiService.getStories()
-            Result.success(response)
-        } catch (e: HttpException) {
-            Result.failure(e)
-        } catch (e: IOException) {
-            Result.failure(e)
-        }
+    suspend fun getStories(): StoryResponse {
+        return apiService.getStories()
+    }
+
+    suspend fun getStoriesWithLocation(): StoryResponse {
+        return apiService.getStoriesWithLocation()
     }
 
     suspend fun getDetailStory(id: String) : DetailStoryResponse {

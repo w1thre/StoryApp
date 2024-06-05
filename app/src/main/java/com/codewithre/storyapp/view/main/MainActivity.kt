@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.codewithre.storyapp.R
@@ -16,6 +18,7 @@ import com.codewithre.storyapp.databinding.ActivityMainBinding
 import com.codewithre.storyapp.view.ViewModelFactory
 import com.codewithre.storyapp.view.createstory.CreateStoryActivity
 import com.codewithre.storyapp.view.detail.DetailActivity
+import com.codewithre.storyapp.view.maps.MapsActivity
 import com.codewithre.storyapp.view.welcome.WelcomeActivity
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +34,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         viewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
@@ -41,13 +49,6 @@ class MainActivity : AppCompatActivity() {
 
         setupRecyclerView()
         refreshData()
-
-        viewModel.errMsg.observe(this) { err ->
-            err?.let {
-                startActivity(Intent(this, WelcomeActivity::class.java))
-                finish()
-            }
-        }
 
         viewModel.isLoading.observe(this) {
             showLoading(it)
@@ -63,6 +64,11 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.menu_add -> {
                     val intent = Intent(this@MainActivity, CreateStoryActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.menu_maps -> {
+                    val intent = Intent(this@MainActivity, MapsActivity::class.java)
                     startActivity(intent)
                     true
                 }

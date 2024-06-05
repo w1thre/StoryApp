@@ -41,4 +41,6 @@
     <string name="login_success">You have successfully logged in. Can\'t wait to share your story?</string>
     <string name="not_found">No data found</string>
     <string name="success_update_data">Success update data</string>
+    <string name="maps">Maps</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
