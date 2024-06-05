@@ -41,4 +41,7 @@
     <string name="upload_failed">Le téléchargement a échoué : %1$s</string>
     <string name="not_found">Aucune donnée n\'a été trouvée</string>
     <string name="success_update_data">Données de mise à jour de la réussite</string>
+    <string name="maps">Cartes</string>
+    <string name="title_activity_maps">Activité Cartes</string>
+    <string name="retry">réessayer</string>
 </resources>

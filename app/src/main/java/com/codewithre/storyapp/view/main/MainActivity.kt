@@ -3,6 +3,7 @@ package com.codewithre.storyapp.view.main
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -12,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.codewithre.storyapp.R
+import com.codewithre.storyapp.adapter.LoadingStateAdapter
 import com.codewithre.storyapp.adapter.StoryAdapter
 import com.codewithre.storyapp.data.remote.response.ListStoryItem
 import com.codewithre.storyapp.databinding.ActivityMainBinding
@@ -48,16 +50,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         setupRecyclerView()
+        getData()
         refreshData()
 
         viewModel.isLoading.observe(this) {
             showLoading(it)
-        }
-
-        viewModel.listStory.observe(this) { stories ->
-            storyAdapter.submitList(stories)
-            showLoading(false)
-            showNotFound(stories.isNullOrEmpty())
         }
 
         binding.toolbar.setOnMenuItemClickListener {
@@ -86,9 +83,22 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun getData() {
+        val adapter = StoryAdapter()
+        binding.rvStory.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                adapter.retry()
+            }
+        )
+        viewModel.stories.observe(this) {
+            adapter.submitData(lifecycle, it)
+            showLoading(false)
+        }
+    }
+
     private fun refreshData() {
         binding.swipeToRefresh.setOnRefreshListener {
-            viewModel.getStories()
+            getData()
             Toast.makeText(this, getString(R.string.success_update_data), Toast.LENGTH_SHORT).show()
             binding.swipeToRefresh.isRefreshing = false
         }
@@ -96,7 +106,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getStories()
+        getData()
     }
 
     private fun setupRecyclerView() {
@@ -105,14 +115,6 @@ class MainActivity : AppCompatActivity() {
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvStory.addItemDecoration(itemDecoration)
         binding.rvStory.adapter = storyAdapter
-
-        storyAdapter.setOnItemClickCallback(object : StoryAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: ListStoryItem) {
-                val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                intent.putExtra(EXTRA_ID, data.id)
-                startActivity(intent)
-            }
-        })
     }
 
     private fun showLoading(isLoading: Boolean) {

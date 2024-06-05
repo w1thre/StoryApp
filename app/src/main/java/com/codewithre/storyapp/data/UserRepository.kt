@@ -1,8 +1,16 @@
 package com.codewithre.storyapp.data
 
+import androidx.lifecycle.LiveData
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
+import com.codewithre.storyapp.data.database.StoryDatabase
 import com.codewithre.storyapp.data.pref.UserModel
 import com.codewithre.storyapp.data.pref.UserPreference
 import com.codewithre.storyapp.data.remote.response.DetailStoryResponse
+import com.codewithre.storyapp.data.remote.response.ListStoryItem
 import com.codewithre.storyapp.data.remote.response.LoginResponse
 import com.codewithre.storyapp.data.remote.response.RegisterResponse
 import com.codewithre.storyapp.data.remote.response.StoryResponse
@@ -15,6 +23,7 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class UserRepository private constructor(
+    private val storyDatabase: StoryDatabase,
     private val apiService: ApiService,
     private val userPreference: UserPreference,
 ) {
@@ -35,8 +44,18 @@ class UserRepository private constructor(
         return apiService.login(email, password)
     }
 
-    suspend fun getStories(): StoryResponse {
-        return apiService.getStories()
+    fun getStories(): LiveData<PagingData<ListStoryItem>> {
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5,
+            ),
+            remoteMediator = StoryRemoteMediator(storyDatabase, apiService),
+            pagingSourceFactory = {
+//                StoryPagingSource(apiService)
+                storyDatabase.storyDao().getAllStories()
+            }
+        ).liveData
     }
 
     suspend fun getStoriesWithLocation(): StoryResponse {
@@ -53,8 +72,9 @@ class UserRepository private constructor(
 
     companion object {
         fun getInstance(
+            storyDatabase: StoryDatabase,
             apiService: ApiService,
             userPreference: UserPreference
-        ) = UserRepository(apiService, userPreference)
+        ) = UserRepository(storyDatabase,apiService, userPreference)
     }
 }

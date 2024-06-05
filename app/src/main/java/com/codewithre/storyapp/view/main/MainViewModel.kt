@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.codewithre.storyapp.data.UserRepository
 import com.codewithre.storyapp.data.pref.UserModel
 import com.codewithre.storyapp.data.remote.response.ListStoryItem
@@ -18,19 +20,8 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun getStories() {
-        viewModelScope.launch {
-            _isLoading.value = true
-            try {
-                val response = repository.getStories()
-                _listStory.value = response.listStory
-            } catch (e: Exception) {
-                e.printStackTrace()
-            } finally {
-                _isLoading.value = false
-            }
-        }
-    }
+    val stories : LiveData<PagingData<ListStoryItem>> =
+        repository.getStories().cachedIn(viewModelScope)
 
     fun getSession(): LiveData<UserModel> {
         return repository.getSession().asLiveData()
