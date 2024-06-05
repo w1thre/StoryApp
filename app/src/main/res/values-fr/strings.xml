@@ -44,4 +44,6 @@
     <string name="maps">Cartes</string>
     <string name="title_activity_maps">Activité Cartes</string>
     <string name="retry">réessayer</string>
+    <string name="include_gps_location">Inclure votre localisation ?</string>
+    <string name="location_unavailable">Lieu non disponible</string>
 </resources>

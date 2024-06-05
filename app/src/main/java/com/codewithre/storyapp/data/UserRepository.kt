@@ -66,8 +66,13 @@ class UserRepository private constructor(
         return apiService.getDetailStory(id)
     }
 
-    suspend fun uploadStory(photo: MultipartBody.Part, description: RequestBody) : UploadResponse {
-        return apiService.uploadStory(photo, description)
+    suspend fun uploadStory(
+        photo: MultipartBody.Part,
+        description: RequestBody,
+        lat: Double?,
+        lon: Double?
+    ) : UploadResponse {
+        return apiService.uploadStory(photo, description, lat, lon)
     }
 
     companion object {

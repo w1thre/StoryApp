@@ -19,11 +19,16 @@ class CreateStoryViewModel(private val repository: UserRepository) : ViewModel()
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun uploadStory(file: MultipartBody.Part, description: RequestBody) {
+    fun uploadStory(
+        file: MultipartBody.Part,
+        description: RequestBody,
+        lat: Double?,
+        lon: Double?
+    ) {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val response = repository.uploadStory(file, description)
+                val response = repository.uploadStory(file, description, lat, lon)
                 _uploadResult.value = response
             } catch (e: Exception) {
                 val errorMessage = getErrorMessage(e)

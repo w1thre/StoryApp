@@ -2,6 +2,7 @@ package com.codewithre.storyapp.view.createstory
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.codewithre.storyapp.R
 import com.codewithre.storyapp.databinding.ActivityCreateStoryBinding
@@ -18,6 +20,9 @@ import com.codewithre.storyapp.view.ViewModelFactory
 import com.codewithre.storyapp.view.utils.getImageUri
 import com.codewithre.storyapp.view.utils.reduceFileImage
 import com.codewithre.storyapp.view.utils.uriToFile
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.GoogleMap
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -29,7 +34,9 @@ class CreateStoryActivity : AppCompatActivity() {
     private val viewModel by viewModels<CreateStoryViewModel> {
         ViewModelFactory.getInstance(this)
     }
-
+    
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    
     private var currentImageUri: Uri? = null
 
     private val requestPermissionLauncher =
@@ -60,15 +67,29 @@ class CreateStoryActivity : AppCompatActivity() {
             requestPermissionLauncher.launch(REQUIRED_PERMISSION)
         }
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        binding.switchGpsLocation.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                getLocation()
+            }
+        }
+
         binding.apply {
             btnGallery.setOnClickListener { startGallery() }
             btnCamera.setOnClickListener { startCamera() }
-            buttonAdd.setOnClickListener { uploadStory() }
+            binding.buttonAdd.setOnClickListener {
+                if (binding.switchGpsLocation.isChecked) {
+                    getLocation()
+                } else {
+                    uploadStory(0.0, 0.0)
+                }
+            }
         }
 
         viewModel.isLoading.observe(this) {
             showLoading(it)
         }
+
 
         viewModel.uploadResult.observe(this) { response ->
             if (response.error == true) {
@@ -81,7 +102,29 @@ class CreateStoryActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadStory() {
+    private fun getLocation() {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 100
+            )
+            return
+        }
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            if (location != null) {
+                uploadStory(location.latitude, location.longitude)
+            } else {
+                showToast(getString(R.string.location_unavailable))
+            }
+        }.addOnFailureListener {
+            showToast(getString(R.string.location_unavailable))
+        }
+    }
+
+    private fun uploadStory(latitude: Double, longitude: Double) {
         if (currentImageUri == null || binding.edAddDescription.text.isNullOrEmpty()) {
             showToast(getString(R.string.upload_validation))
             return
@@ -98,7 +141,8 @@ class CreateStoryActivity : AppCompatActivity() {
                 imageFile.name,
                 requestImageFile
             )
-            viewModel.uploadStory(multipartBody, requestBody)
+
+            viewModel.uploadStory(multipartBody, requestBody, latitude, longitude)
         }
     }
 
@@ -140,6 +184,7 @@ class CreateStoryActivity : AppCompatActivity() {
 
     companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
+
     }
 
 }

@@ -84,29 +84,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        val adapter = StoryAdapter()
-        binding.rvStory.adapter = adapter.withLoadStateFooter(
-            footer = LoadingStateAdapter {
-                adapter.retry()
-            }
-        )
         viewModel.stories.observe(this) {
-            adapter.submitData(lifecycle, it)
+            storyAdapter.submitData(lifecycle, it)
             showLoading(false)
+            showNotFound(storyAdapter.snapshot().isEmpty())
         }
     }
 
     private fun refreshData() {
         binding.swipeToRefresh.setOnRefreshListener {
-            getData()
+            if(!storyAdapter.snapshot().isEmpty()){
+                storyAdapter.refresh()
+            }
             Toast.makeText(this, getString(R.string.success_update_data), Toast.LENGTH_SHORT).show()
             binding.swipeToRefresh.isRefreshing = false
         }
     }
 
+
     override fun onResume() {
         super.onResume()
-        getData()
+        if(!storyAdapter.snapshot().isEmpty()){
+            storyAdapter.refresh()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -114,7 +114,11 @@ class MainActivity : AppCompatActivity() {
         binding.rvStory.layoutManager = layoutManager
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvStory.addItemDecoration(itemDecoration)
-        binding.rvStory.adapter = storyAdapter
+        binding.rvStory.adapter = storyAdapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                storyAdapter.retry()
+            }
+        )
     }
 
     private fun showLoading(isLoading: Boolean) {
