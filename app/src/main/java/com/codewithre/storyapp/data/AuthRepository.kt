@@ -4,6 +4,7 @@ import com.codewithre.storyapp.data.pref.UserModel
 import com.codewithre.storyapp.data.pref.UserPreference
 import com.codewithre.storyapp.data.remote.response.LoginResponse
 import com.codewithre.storyapp.data.remote.retrofit.ApiService
+import com.codewithre.storyapp.view.utils.wrapEspressoIdlingResource
 
 class AuthRepository private constructor(
     private val apiService: ApiService,
@@ -11,7 +12,9 @@ class AuthRepository private constructor(
 ) {
 
     suspend fun login(email: String, password: String): LoginResponse {
-        return apiService.login(email, password)
+        return wrapEspressoIdlingResource {
+            apiService.login(email, password)
+        }
     }
 
     suspend fun saveSession(user: UserModel) {

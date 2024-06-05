@@ -52,9 +52,10 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.play.services.maps)
     testImplementation(libs.junit)
-    testImplementation("junit:junit:4.12")
+    testImplementation(libs.junit.v412)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.espresso.idling.resource)
 
     implementation(libs.retrofit)
     implementation(libs.retrofit2.converter.gson)
