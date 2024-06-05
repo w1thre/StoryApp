@@ -19,8 +19,6 @@ import com.codewithre.storyapp.data.remote.retrofit.ApiService
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.HttpException
-import java.io.IOException
 
 class UserRepository private constructor(
     private val storyDatabase: StoryDatabase,
@@ -52,7 +50,6 @@ class UserRepository private constructor(
             ),
             remoteMediator = StoryRemoteMediator(storyDatabase, apiService),
             pagingSourceFactory = {
-//                StoryPagingSource(apiService)
                 storyDatabase.storyDao().getAllStories()
             }
         ).liveData

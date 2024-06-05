@@ -3,7 +3,6 @@ package com.codewithre.storyapp.view.main
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -15,11 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.codewithre.storyapp.R
 import com.codewithre.storyapp.adapter.LoadingStateAdapter
 import com.codewithre.storyapp.adapter.StoryAdapter
-import com.codewithre.storyapp.data.remote.response.ListStoryItem
 import com.codewithre.storyapp.databinding.ActivityMainBinding
 import com.codewithre.storyapp.view.ViewModelFactory
 import com.codewithre.storyapp.view.createstory.CreateStoryActivity
-import com.codewithre.storyapp.view.detail.DetailActivity
 import com.codewithre.storyapp.view.maps.MapsActivity
 import com.codewithre.storyapp.view.welcome.WelcomeActivity
 

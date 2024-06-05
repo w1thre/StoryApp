@@ -14,9 +14,6 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: UserRepository) : ViewModel() {
 
-    private val _listStory = MutableLiveData<List<ListStoryItem?>>()
-    val listStory: LiveData<List<ListStoryItem?>> = _listStory
-
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 

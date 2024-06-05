@@ -40,26 +40,20 @@ class LoginLogoutTest {
 
     @Test
     fun loginAndLogoutTest() {
-        // Launch the activity
         ActivityScenario.launch(LoginActivity::class.java)
 
-        // Perform login
         onView(withId(R.id.ed_login_email)).perform(typeText("gigi@mail.com"), closeSoftKeyboard())
         onView(withId(R.id.ed_login_password)).perform(typeText("password"), closeSoftKeyboard())
         onView(withId(R.id.loginButton)).perform(click())
         onView(withText(R.string.yeah)).check(matches(isDisplayed()))
         onView(withText(R.string.continue_text)).perform(click())
 
-
-        // Verify that the main activity is displayed after login
         onView(withId(R.id.main)).check(matches(isDisplayed()))
 
         openActionBarOverflowOrOptionsMenu(getApplicationContext())
 
-        // Perform logout
         onView(withText(R.string.logout)).perform(click())
 
-        // Verify that the login activity is displayed after logout
         onView(withId(R.id.welcome)).check(matches(isDisplayed()))
     }
 
